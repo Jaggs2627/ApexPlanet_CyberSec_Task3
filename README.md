@@ -66,6 +66,6 @@ echo '<input type="hidden" name="user_token" value="'.$_SESSION['token'].'">';
 // On processing submission: Enforce exact string verification
 if (!hash_equals($_SESSION['token'], $_POST['user_token'])) {
     die("CSRF Token validation failure. Request terminated.");
-}
+}```
 
 ---
