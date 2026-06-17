@@ -37,7 +37,6 @@ All user-supplied text strings must be converted into safe literal string sequen
 * **Secure Encoded Text:** `&lt;script&gt;`
 
 In PHP, this is easily enforced using native functions like `htmlspecialchars()`:
-```php
-echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8');
 
+echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8');
 Content-Security-Policy: default-src 'self'; script-src 'self';
