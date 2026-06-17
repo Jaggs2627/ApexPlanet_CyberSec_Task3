@@ -18,6 +18,8 @@ $stmt->bind_param("s", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 
+---
+
 ## Step 2: Cross-Site Scripting (XSS) Analysis & Remediation
 
 ### 1. Exploitation Summary
