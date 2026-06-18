@@ -91,11 +91,13 @@ Force a cryptographic human-verification challenge puzzle (such as Google reCAPT
 
 #### C. Secure Password Hashing Configurations
 Ensure all target password databases never store plaintext credentials. Upgrade database security maps to utilize adaptive, computationally intensive cryptographic hashing parameters like **Bcrypt** or **Argon2id**:
-```php
+
 // Creating a high-security cryptographic representation
+
 $secureHash = password_hash($userPassword, PASSWORD_ARGON2ID);
 
 // Validating incoming attempts safely
+
 if (password_verify($inputPassword, $secureHash)) {
     // Session authorized
 }
