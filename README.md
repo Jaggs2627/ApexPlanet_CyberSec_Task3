@@ -101,3 +101,5 @@ $secureHash = password_hash($userPassword, PASSWORD_ARGON2ID);
 if (password_verify($inputPassword, $secureHash)) {
     // Session authorized
 }
+
+---
