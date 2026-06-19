@@ -14,10 +14,12 @@ $query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
 $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
 ```
 
+```php
 $stmt = $mysqli->prepare("SELECT first_name, last_name FROM users WHERE user_id = ?");
 $stmt->bind_param("s", $id);
 $stmt->execute();
 $result = $stmt->get_result();
+```
 
 ---
 
@@ -38,9 +40,10 @@ All user-supplied text strings must be converted into safe literal string sequen
 * **Secure Encoded Text:** `&lt;script&gt;`
 
 In PHP, this is easily enforced using native functions like `htmlspecialchars()`:
-
+```php
 echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8');
 Content-Security-Policy: default-src 'self'; script-src 'self';
+```
 
 ---
 
