@@ -131,3 +131,6 @@ if (!array_key_exists($page, $allowed_pages)) {
 }
 
 include($allowed_pages[$page]);
+
+allow_url_fopen = Off
+allow_url_include = Off
