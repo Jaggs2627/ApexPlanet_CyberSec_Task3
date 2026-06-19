@@ -138,3 +138,28 @@ allow_url_include = Off
 ```
 
 ---
+
+## Step 6: Command Injection Analysis & Remediation
+
+### 1. Exploitation Summary
+* **Vulnerability Description:** The application accepts user input strings and passes them directly to an underlying operating system shell execution engine (`shell_exec()` or `exec()`) without stripping metacharacters or utilizing command arguments.
+* **Payload Used:** `127.0.0.1; whoami`
+* **Impact:** By injecting shell command delimiters (such as `;`), an attacker can append malicious OS-level commands to execute right after the legitimate utility completes. This permits full local command shell context execution, allowing adversaries to read server directory contents, install backdoor web shells, or move laterally within the internal host network infrastructure.
+
+### 2. Remediation & Prevention
+Operating system command calls should be completely avoided whenever possible. If system calls are strictly required, use safe programmatic abstractions rather than concatenating user strings directly to a raw system shell.
+
+#### A. Avoid Shell Wrappers via Argument Arrays
+Instead of invoking an interactive shell engine wrapper like `shell_exec()`, call specific binaries explicitly via safe executable execution methods that handle parameters as independent, non-executable data arguments.
+
+In PHP, if a web utility must handle input contexts safely, utilize strict system white-listing or parse input variables purely through functions that escape shell parameters completely:
+
+```php
+// Force input strings to be treated strictly as literals, stripping out shell delimiters like ;, &&, |, or `
+$target_ip = shell_arg($_POST['ip']);
+
+// Execute safely using hardcoded command contexts
+exec("ping -c 4 " . $target_ip, $output);
+```
+
+---
