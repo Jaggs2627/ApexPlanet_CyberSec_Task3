@@ -59,20 +59,18 @@ To mitigate Cross-Site Request Forgery thoroughly, the application architecture 
 
 #### A. Anti-CSRF Tokens (Synchronizer Token Pattern)
 The application should generate a secure, unique, and cryptographically random string token inside the user's active session array whenever a state-changing form is generated. This value must be verified upon submission:
-
+```php
 // On form generation: Assign a session validation token
-
 $_SESSION['token'] = bin2hex(random_bytes(32));
 
 // In the HTML form payload: Append a hidden token attribute
-
 echo '<input type="hidden" name="user_token" value="'.$_SESSION['token'].'">';
 
 // On processing submission: Enforce exact string verification
-
 if (!hash_equals($_SESSION['token'], $_POST['user_token'])) {
     die("CSRF Token validation failure. Request terminated.");
 }
+```
 
 ---
 
