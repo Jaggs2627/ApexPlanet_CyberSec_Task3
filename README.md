@@ -9,9 +9,9 @@
 To eliminate SQL injection entirely, the application must completely separate user data from the database query logic using **Prepared Statements (Parameterized Queries)**.
 
 #### Vulnerable Code (Low Security Context):
-
+```php
 $query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
-$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+$result = mysqli_query($GLOBALS["___mysqli_ston"], $query);```
 
 $stmt = $mysqli->prepare("SELECT first_name, last_name FROM users WHERE user_id = ?");
 $stmt->bind_param("s", $id);
