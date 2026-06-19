@@ -103,3 +103,31 @@ if (password_verify($inputPassword, $secureHash)) {
 }
 
 ---
+
+## Step 5: File Inclusion (LFI) Analysis & Remediation
+
+### 1. Exploitation Summary
+* **Vulnerability Description:** The application's input parameter accepts direct file path requests dynamically without validating, white-listing, or sanitizing the structural directory target path context.
+* **Payload Used:** `http://127.0.0.1/vulnerabilities/fi/?page=../../../../../../etc/passwd`
+* **Impact:** By utilizing structured directory traversal sequences (`../`), an unprivileged attacker can break out of the intended web root storage matrix. This permits unauthorized execution or read access to sensitive administrative operating system infrastructure files (such as `/etc/passwd`), entirely breaking target confidentiality layers.
+
+### 2. Remediation & Defense Roadmap
+To comprehensively mitigate local and remote file inclusion pathways, the best architectural defense is to avoid dynamic user-supplied string path assignments entirely.
+
+#### A. Implementation of a Strict Whitelist Array
+If specific pages must be loaded dynamically via parameters, map them inside a locked, non-negotiable hardcoded whitelist array map index:
+
+```php
+$allowed_pages = [
+    "include.php" => "include.php",
+    "file1.php"    => "file1.php",
+    "file2.php"    => "file2.php"
+];
+
+$page = $_GET['page'];
+
+if (!array_key_exists($page, $allowed_pages)) {
+    die("Error: Requested resource block is unauthorized.");
+}
+
+include($allowed_pages[$page]);
